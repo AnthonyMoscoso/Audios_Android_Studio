@@ -163,62 +163,37 @@ public class ListenActivity extends AppCompatActivity {
             btnClick.setImageResource(R.drawable.play);
             txtSize.setText(LONGITUD_AUDIOS +"");
             txtTiempo.setText(LONGITUD_AUDIOS +"");
-
     }
-
-
-
     protected void onRestart(){
         super.onRestart();
         GetBundle();
         prepareMediaPlayer(Audio);
         btnClick.setImageResource(R.drawable.play);
         mediaPlayer.seekTo(playPosicion);
-
-
+    }
+    protected void onPause(){
+        super.onPause();
+        if(reloj!=null){
+            reloj.cancel();
+        }
+        if(mediaPlayer!=null){
+            playPosicion = mediaPlayer.getCurrentPosition();
+            mediaPlayer.pause();
+        }
 
     }
+
 
     public void Back2(View view){
         Intent intent=new Intent();
         setResult(Activity.RESULT_OK, intent);
-        if(reloj!=null){
-
-            reloj.cancel();
-
-        }
-        mediaPlayer.stop();
-        mediaPlayer.release();
-
         finish();
     }
-
-    protected void onResume(){
-        super.onResume();
-
-
-    }
-
-    protected void onPause(){
-        super.onPause();
-        reloj.cancel();
-        playPosicion = mediaPlayer.getCurrentPosition();
-
-        mediaPlayer.pause();
-    }
-
-    protected void onStop(){
-        super.onStop();
-
-    }
-
     @Override
     protected void onDestroy(){
         super.onDestroy();
         if(reloj!=null){
-
             reloj.cancel();
-
         }
         mediaPlayer.stop();
         mediaPlayer.release();

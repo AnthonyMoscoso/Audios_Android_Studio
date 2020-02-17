@@ -139,7 +139,7 @@ public class RecordActivity extends AppCompatActivity {
         recorder.stop();
         recorder.release();
         recorder=null;
-        btnRecord.setImageResource(R.drawable.play);
+        btnRecord.setImageResource(R.drawable.microphone);
         IsRecording=false;
     }
     private void ReiniciarBarra(){
@@ -155,15 +155,14 @@ public class RecordActivity extends AppCompatActivity {
     }
 
 
-    protected void onResume(){
-        super.onResume();
-
-    }
 
 
     protected void onPause(){
         super.onPause();
-//        recorder.pause();
+        if(recorder!=null){
+            GuardarAudio();
+        }
+
     }
 
     protected void onStop(){
@@ -172,39 +171,25 @@ public class RecordActivity extends AppCompatActivity {
     }
 
     public void Back(View v){
-        if(IsRecording || recorder!=null){
-            reloj.cancel();
-            recorder.stop();
-            recorder.reset();
-            btnRecord.setImageResource(R.drawable.play);
-
-        }
         Intent intent=new Intent();
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
+
     @Override
     protected void onDestroy(){
         super.onDestroy();
         if(IsRecording || recorder!=null){
-            recorder.stop();
-            recorder.reset();
-            btnRecord.setImageResource(R.drawable.play);
+            GuardarAudio();
         }
-
-
     }
 
     @Override
     protected void onSaveInstanceState(Bundle bundle){
         super.onSaveInstanceState(bundle);
         if(IsRecording){
+            GuardarAudio();
+        }
 
-        }
-        else{
-            recorder.stop();
-            recorder.reset();
-            btnRecord.setImageResource(R.drawable.play);
-        }
     }
 }
