@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onStart(){
         super.onStart();
@@ -94,24 +97,22 @@ public class MainActivity extends AppCompatActivity {
     }
     public void GoToRecordActivy(View v){
         Intent intent=new Intent(this,RecordActivity.class);
-        startActivityForResult(intent,500);
+        startActivityForResult(intent,2);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
+    public void Reload(MenuItem menuItem){
+        LoadAudios();
+    }
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
         if(resultCode==RESULT_OK){
-
-                Toast.makeText(this,"hola",Toast.LENGTH_LONG).show();
-
             }
         }
-
-
-
-
-
-
-
 
 }

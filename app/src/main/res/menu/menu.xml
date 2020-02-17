@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="Edit"
+        android:id="@+id/itemGuardar"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:visible="true"
+        android:onClick="Reload"
+        app:showAsAction="always" />
+</menu>

@@ -97,6 +97,7 @@ public class ListenActivity extends AppCompatActivity {
                 tiempoRes = millisUntilFinished;
                 TIEMPO_RESTANTE= LONGITUD_AUDIOS-tiempoRes;
                 txtTiempo.setText(tiempoRes+"/");
+
             }
 
             @Override
@@ -104,6 +105,7 @@ public class ListenActivity extends AppCompatActivity {
                 playPosicion=0;
                 mediaPlayer.seekTo(0);
               mediaPlayer.pause();
+              btnClick.setBackground(getDrawable(R.drawable.boton_red));
               btnClick.setImageResource(R.drawable.stop);
 
             }
@@ -116,6 +118,7 @@ public class ListenActivity extends AppCompatActivity {
 
     public void Listen(View v){
         playPosicion=mediaPlayer.getCurrentPosition();
+        btnClick.setBackground(getDrawable(R.drawable.boton_circular));
         if(mediaPlayer.isPlaying()){
             mediaPlayer.pause();
             btnClick.setImageResource(R.drawable.play);
@@ -161,6 +164,7 @@ public class ListenActivity extends AppCompatActivity {
             mediaPlayer.pause();
             mediaPlayer.seekTo(0);
             btnClick.setImageResource(R.drawable.play);
+             btnClick.setBackground(getDrawable(R.drawable.boton_circular));
             txtSize.setText(LONGITUD_AUDIOS +"");
             txtTiempo.setText(LONGITUD_AUDIOS +"");
     }
@@ -169,6 +173,7 @@ public class ListenActivity extends AppCompatActivity {
         GetBundle();
         prepareMediaPlayer(Audio);
         btnClick.setImageResource(R.drawable.play);
+
         mediaPlayer.seekTo(playPosicion);
     }
     protected void onPause(){

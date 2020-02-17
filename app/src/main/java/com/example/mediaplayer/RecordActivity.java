@@ -41,8 +41,8 @@ public class RecordActivity extends AppCompatActivity {
     protected ProgressBar progressBar;
     protected CountDownTimer reloj;
     private boolean IsRecording;
-    long tiempoRes;
-    File mFolder;
+    private long tiempoRes;
+    private File mFolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +55,7 @@ public class RecordActivity extends AppCompatActivity {
         txtTime.setText("hola");
         progressBar.setMax(DURACION_MAXIMA);
         progressBar.setProgress(0);
-
         IsRecording=false;
-
          ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, 1000);
         mFolder = new File(getFilesDir() + "/Audios");
         if(!mFolder.exists()){
@@ -99,16 +97,13 @@ public class RecordActivity extends AppCompatActivity {
                 tiempoRes = millisUntilFinished;
                 progressBar.setProgress(progressBar.getProgress() + 1000);
                 txtTime.setText(tiempoRes+"");
-
             }
 
             @Override
             public void onFinish() {
-                Toast.makeText(getApplicationContext(),"Tiempo Terminado",Toast.LENGTH_LONG).show();
                 if(IsRecording){
                     GuardarAudio();
                     ReiniciarBarra();
-                    txtTime.setText(DURACION_MAXIMA);
                 }
             }
         };
@@ -120,17 +115,19 @@ public class RecordActivity extends AppCompatActivity {
     public void Record(View v) throws IOException {
         if(!IsRecording){
             LoadRecorder();
-           reloj=crearTimer(DURACION_MAXIMA);
-           reloj.start();
+            reloj=crearTimer(DURACION_MAXIMA);
+            reloj.start();
+            btnRecord.setBackground(getDrawable(R.drawable.boton_red));
             txtEstado.setText("Recording...");
             btnRecord.setImageResource(R.drawable.stop);
             IsRecording=true;
         }
         else{
             reloj.cancel();
+            btnRecord.setBackground(getDrawable(R.drawable.boton_circular));
             GuardarAudio();
             btnRecord.setImageResource(R.drawable.microphone);
-            ReiniciarBarra();
+
         }
 
     }
@@ -139,8 +136,11 @@ public class RecordActivity extends AppCompatActivity {
         recorder.stop();
         recorder.release();
         recorder=null;
+        btnRecord.setBackground(getDrawable(R.drawable.boton_circular));
         btnRecord.setImageResource(R.drawable.microphone);
         IsRecording=false;
+        txtTime.setText("Pulsa para grabar");
+        ReiniciarBarra();
     }
     private void ReiniciarBarra(){
         progressBar.setMax(DURACION_MAXIMA);
@@ -182,6 +182,8 @@ public class RecordActivity extends AppCompatActivity {
         if(IsRecording || recorder!=null){
             GuardarAudio();
         }
+
+
     }
 
     @Override
